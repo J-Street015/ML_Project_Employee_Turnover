@@ -22,7 +22,7 @@ Bar plot of project count by turnover status
 K-Means was applied to employees who left to understand different patterns among them:
 Cluster 2: High evaluation + low satisfaction → likely overworked high performers
 Cluster 1: Medium satisfaction + low evaluation → possibly disengaged
-Cluster 2: High satisfaction + high evaluation → may have found better opportunities
+Cluster 0: High satisfaction + high evaluation → may have found better opportunities
 Salary was later encoded and scaled for consistency during clustering.
 ⚖️ Handling Imbalanced Data
 Because only a minority of employees leave, the dataset was imbalanced.
