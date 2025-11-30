@@ -307,6 +307,44 @@ print(f"Gradient Boosting Model Classification Report: {classification_report(y_
 #    macro avg       0.94      0.95      0.94      3000
 # weighted avg       0.96      0.96      0.96      3000
 
+##### All models classification reports ##########
+models = {
+    "Logistic Regression": model_logistic,
+    "Random Forest": model_rf,
+    "Gradient Boost": model_gb
+}
+
+# Collect classification reports
+report_list = []
+
+for name, model in models.items():
+    cr = classification_report(y_test, model.predict(X_test), output_dict=True)
+    df = pd.DataFrame(cr).transpose()
+    df['model'] = name
+    report_list.append(df)
+
+all_reports = pd.concat(report_list)
+all_reports = all_reports.reset_index().rename(columns={'index':'class'})
+all_reports = all_reports[['model', 'class', 'precision', 'recall', 'f1-score', 'support']]
+
+# Plot table as image
+fig, ax = plt.subplots(figsize=(12, 6))
+ax.axis('off')
+table = ax.table(cellText=all_reports.values,
+                 colLabels=all_reports.columns,
+                 cellLoc='center',
+                 loc='center')
+table.auto_set_font_size(False)
+table.set_fontsize(10)
+table.auto_set_column_width([0,1,2,3,4,5])
+
+plt.title("Classification Reports Comparison", fontsize=14, pad=20)
+plt.tight_layout()
+plt.savefig("classification_reports_comparison.png", dpi=300)
+# plt.show()
+
+##### All models classification reports End ##########
+
 
 ### 6 Identify the best model and justify the evaluation Metrics
 
