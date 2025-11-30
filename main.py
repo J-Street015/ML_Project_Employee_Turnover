@@ -351,18 +351,71 @@ print(f"Confusion Matrix Logistic Regression: {confusion_matrix(y_test, model_lo
 # Confusion Matrix Logistic Regression:
 # [[1702  589]
 #  [ 174  535]]
+cm_lr = confusion_matrix(y_test, model_logistic.predict(X_test))
+# Plot
+plt.figure(figsize=(6,5))
+sns.heatmap(cm_lr, annot=True, fmt='d', cmap='Blues', xticklabels=['Stayed','Left'], yticklabels=['Stayed','Left'])
+plt.ylabel('Actual')
+plt.xlabel('Predicted')
+plt.title('Confusion Matrix - Logistic Regression')
+# plt.show()
 
 #### confusion matrix Random Forest Model
 print(f"Confusion Matrix Random Forest: {confusion_matrix(y_test, model_rf.predict(X_test))}")
 # Confusion Matrix Random Forest:
 # [[2202   89]
 #  [  52  657]]
+cm_rf= confusion_matrix(y_test, model_rf.predict(X_test))
+# Plot
+plt.figure(figsize=(6,5))
+sns.heatmap(cm_rf, annot=True, fmt='d', cmap='Blues', xticklabels=['Stayed','Left'], yticklabels=['Stayed','Left'])
+plt.ylabel('Actual')
+plt.xlabel('Predicted')
+plt.title('Confusion Matrix - Random Forest')
+# plt.show()
+
 
 #### confusion matrix Gradient Boost Model
 print(f"Confusion Matrix Gradient Boost: {confusion_matrix(y_test, model_gb.predict(X_test))}")
 # Confusion Matrix Gradient Boost:
 # [[2215   76]
 #  [  45  664]]
+cm_gb= confusion_matrix(y_test, model_gb.predict(X_test))
+# Plot
+plt.figure(figsize=(6,5))
+sns.heatmap(cm_gb, annot=True, fmt='d', cmap='Blues', xticklabels=['Stayed','Left'], yticklabels=['Stayed','Left'])
+plt.ylabel('Actual')
+plt.xlabel('Predicted')
+plt.title('Confusion Matrix - Gradient Boost')
+# plt.show()
+
+
+
+# plot all models confusion matrices into one figure:
+
+from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+models = {
+    "Logistic Regression": model_logistic,
+    "Random Forest": model_rf,
+    "Gradient Boost": model_gb
+}
+
+plt.figure(figsize=(18,5))
+
+for i, (name, model) in enumerate(models.items(), 1):
+    cm = confusion_matrix(y_test, model.predict(X_test))
+    plt.subplot(1, 3, i)
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=['Stayed','Left'], yticklabels=['Stayed','Left'])
+    plt.title(f'Confusion Matrix - {name}')
+    plt.xlabel('Predicted')
+    plt.ylabel('Actual')
+
+plt.tight_layout()
+plt.show()
+
 
 #### Inference from Confusion matrix
 # 1. While Random Forest and Gradient Boosting have both a high precision to identify true pos and true negative,
